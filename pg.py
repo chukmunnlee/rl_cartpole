@@ -6,9 +6,9 @@ from matplotlib import pyplot as plt
 EPISODES = 5 if len(sys.argv) < 2 else int(sys.argv[1])
 
 GAMMA = 1
-ALPHA_CRITIC = 0.3
+ALPHA_CRITIC = 0.2
 #ALPHA_ACTOR = 0.0025
-ALPHA_ACTOR = 0.15
+ALPHA_ACTOR = 0.5
 
 def softmax(st, th):
    exp = np.exp(np.dot(th, st))
@@ -26,8 +26,8 @@ env = gym.make('CartPole-v0')
 
 np.random.seed(1)
 
-#th = np.ones(shape=(2, 4))
-th = np.random.rand(2, 4) * 1000
+#th = np.random.rand(2, 4) * 1000
+th = np.random.rand(2, 4) 
 w = np.ones(shape=(1, 4))
 
 print('th = ', th)

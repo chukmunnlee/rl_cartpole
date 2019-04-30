@@ -1,4 +1,5 @@
 
+import sys
 import gym
 import numpy as np
 import matplotlib.pyplot as plt
@@ -6,7 +7,8 @@ import copy
 
 #Hyperparameters
 #NUM_EPISODES = 10000
-NUM_EPISODES = 5000
+NUM_EPISODES = 1 if len(sys.argv) < 2 else int(sys.argv[1])
+
 LEARNING_RATE = 0.000025
 GAMMA = 0.99
 
@@ -17,6 +19,7 @@ np.random.seed(1)
 
 # Init weight
 w = np.random.rand(4, 2)
+print('weight: ', w)
 
 # Keep stats for final print of graph
 episode_rewards = []
@@ -51,12 +54,14 @@ for e in range(NUM_EPISODES):
 
 		# Sample from policy and take action in environment
 		probs = policy(state,w)
+		print('probs: ', probs)
 		action = np.random.choice(nA,p=probs[0])
 		next_state,reward,done,_ = env.step(action)
 		next_state = next_state[None,:]
 
 		# Compute gradient and save with reward in memory for our weight updates
 		dsoftmax = softmax_grad(probs)[action,:]
+		print('dsoftmax: ', dsoftmax)
 		dlog = dsoftmax / probs[0,action]
 		grad = state.T.dot(dlog[None,:])
 
@@ -81,6 +86,6 @@ for e in range(NUM_EPISODES):
 	episode_rewards.append(score) 
 	print("EP: " + str(e) + " Score: " + str(score) + "         ",end="\r", flush=False) 
 
-plt.plot(np.arange(num_episodes),episode_rewards)
+plt.plot(np.arange(NUM_EPISODES),episode_rewards)
 plt.show()
 env.close()
