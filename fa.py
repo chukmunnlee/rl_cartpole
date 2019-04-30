@@ -29,6 +29,7 @@ w = np.random.rand(2, 4)
 w = np.ones(shape=(2, 4))
 
 total_reward = []
+ave_reward = []
 
 #for i in tqdm(range(EPISODES)):
 for i in range(EPISODES):
@@ -45,9 +46,10 @@ for i in range(EPISODES):
       cum_reward += reward
 
       if done:
-         print('Episode: %d, reward: %d' %(i, cum_reward))
+         print('Episode: %d, reward: %d' %(i, cum_reward), end='\r', flush=False)
          td_target = reward
          total_reward.append(cum_reward)
+         ave_reward.append(sum(total_reward) / (i + 1))
       else:
          new_action = policy(new_state, w)
          td_target = reward - (GAMMA * Q(new_state, w, new_action))
@@ -63,6 +65,10 @@ env.close()
 print('Average reward: %.3f' %(sum(total_reward) / len(total_reward)))
 
 plt.plot(range(len(total_reward)), total_reward, label='EPISODES %d' %EPISODES)
+plt.plot(range(len(ave_reward)), ave_reward, label='Average reward / ep')
+
+plt.title('Average reward: %.3f, Episodes: %d' %(sum(total_reward) / len(total_reward), EPISODES))
+
 plt.legend()
 
 plt.show()
