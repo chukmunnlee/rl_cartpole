@@ -47,8 +47,8 @@ def plot_it(tot_steps, ave_reward, lines, pause_time=0.1):
 
 plt.style.use('ggplot')
 
-env = gym.make('CartPole-v0')
 env = gym.make('CartPole-v1')
+env = gym.make('CartPole-v0')
 
 def Q(st, w, a=None):
    predict = np.dot(w, st) 
@@ -79,7 +79,7 @@ for i in range(EPISODES):
 
    while not done:
 
-      env.render()
+      #env.render()
 
       new_state, reward, done, _ = env.step(action)
       steps += 1
@@ -101,7 +101,7 @@ for i in range(EPISODES):
       state = new_state
       action = new_action
 
-   lines = plot_it(total_steps, ave_reward, lines)
+   #lines = plot_it(total_steps, ave_reward, lines)
 
 env.close()
 
