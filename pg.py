@@ -8,7 +8,8 @@ EPISODES = 5 if len(sys.argv) < 2 else int(sys.argv[1])
 GAMMA = 1
 ALPHA_CRITIC = 0.2
 #ALPHA_ACTOR = 0.0025
-ALPHA_ACTOR = 0.5
+#ALPHA_ACTOR = 0.53
+ALPHA_ACTOR = 0.6
 
 def softmax(st, th):
    exp = np.exp(np.dot(th, st))
@@ -20,6 +21,9 @@ def policy(st, th):
 
 def value(st, w):
    return np.dot(w, st)
+
+def gradient_check():
+   pass
 
 #env = gym.make('CartPole-v1')
 env = gym.make('CartPole-v0')
